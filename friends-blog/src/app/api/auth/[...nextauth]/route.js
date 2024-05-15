@@ -2,6 +2,6 @@ import React from 'react'
 import { authOptions } from '@/utils/auth'
 import NextAuth from 'next-auth/next'
 
-const route = NextAuth(authOptions)
+const handler = NextAuth(authOptions)
 
-export default route
+export { handler as GET, handler as POST };
