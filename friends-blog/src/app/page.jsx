@@ -12,9 +12,9 @@ export default function Home() {
       <Featured/>
       <CategoryList/>
       <div className={styles.content}>
-        <CardList/>
-        <Menu/>
-      </div>
+        <CardList />
+        <Menu />
+      </div>      
     </div>
   );
 }
