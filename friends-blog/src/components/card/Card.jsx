@@ -3,23 +3,22 @@ import Image from 'next/image'
 import styles from './card.module.css'
 import Link from 'next/link'
 
-export const Card = () => {
+export const Card = ({key, item}) => {
   return (
-    <div className={styles.post}>
+    <div className={styles.post} key={key}>
         <div className={styles.imgcontainer}>
-            <Image src="/floweringCherry.jpeg" alt="Travel pic" className={styles.image} width={200} height={150}/>
+            <Image src={item.img} alt={item.catSlug} className={styles.image} width={200} height={150}/>
         </div>
         <div className={styles.txtcontainer}>
             <div className={styles.detail}>
-                <span className={styles.date}>10-03-2023</span>
-                <span className={styles.category}>Culture</span>
+                <span className={styles.date}>{item.createdAt}</span>
+                <span className={styles.category}>{item.catSlug}</span>
             </div>
             <Link href="/">
-            <h1> Lorem Ipsum</h1>
+            <h1> {item.title}</h1>
             </Link>
             <p className={styles.desc}>
-                Lorem ipsum gjhkjkk klk mllllllllllll bnbsjhksjdksdj
-                jhjhk jjmmmmmm jksjdlskd mmsmdldl
+               {item.desc}
             </p>
             <Link href="/">Read more</Link>            
         </div>
