@@ -9,7 +9,7 @@ import AuthProvider from "@/providers/AuthProvider";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
-  title: "Blog Application",
+  title: "Friends Blog",
   description: "Blog Application created using Nextjs",
 };
 

@@ -1,3 +1,4 @@
+import { getAuthSession } from "@/utils/auth";
 import prisma from "@/utils/connect";
 import { NextResponse } from "next/server";
 
@@ -9,7 +10,7 @@ export const GET = async (req) => {
   try {
     const comments = await prisma.comment.findMany({
       where: { 
-        ...GET(postSlug && {postSlug}),
+        ...(postSlug && {postSlug}),
       },
       include: { user: true },
     });
@@ -25,18 +26,21 @@ export const GET = async (req) => {
 
 // Create a Comment
 export const POST = async (req) => {
-  const { searchParams } = new URL(req.url);
-  const postSlug = searchParams.get("postSlug");
+  const session = await getAuthSession();
 
+  if(!session) {
+    return new NextResponse(
+      JSON.stringify({ message: "Not Authenticated!" }, { status:401 })
+    );
+  }
+console.log("session:", session);
   try {
-    const comments = await prisma.comment.findMany({
-      where: { 
-        ...GET(postSlug && {postSlug}),
-      },
-      include: { user: true },
+    const body = await req.json();
+    const comment = await prisma.comment.create({
+      data: {...body, userEmail: session.user.email},
     });
    
-    return new NextResponse(JSON.stringify(comments, { status: 200 }));
+    return new NextResponse(JSON.stringify(comment, { status: 200 }));
   } catch (err) {
     console.log(err);
     return new NextResponse(
