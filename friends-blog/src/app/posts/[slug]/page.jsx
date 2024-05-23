@@ -10,9 +10,9 @@ const getData = async (slug) => {
      {cache: "no-store"}
     );
   
-    if(res.Error) {
+    if(!res.ok) {
       throw new Error("Failed");
-    }
+    }    
     return res.json();
 } 
 
@@ -29,6 +29,7 @@ function renderMarkdownToHTML(markdown) {
 const SinglePage = async ({ params }) => {
     const { slug } = params;
     const data = await getData(slug);
+    console.log("data:",data, slug);
     const markup = renderMarkdownToHTML(data?.desc);
     
    return (
